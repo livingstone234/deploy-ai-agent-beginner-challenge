@@ -1,0 +1,38 @@
+services: # dockers compose expects
+  backend: # custom key name
+    # image: python:latest
+    build:
+      context: ./backend # directory to build the image in
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8000
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    environment: # env variables that are not sensitive
+      - PORT=8000
+      - MY_PROJECT=hello world
+    env_file: # secret env variables 
+      - .env.sample
+    volumes:
+      - ./backend/src:/app
+    develop:
+      watch:
+        - action: rebuild # rebuild if requirements.txt changes
+          path: backend/requirements.txt
+        - action: rebuild # rebuild if Dockerfile changes
+          path: backend/Dockerfile
+        - action: restart # restarts the "uvicorn..." command
+          path: backend/src/
+        # - action: sync # only updates folders and files that are found in both the local folder and the container folder 
+        #   path: backend/src/
+        #   target: /app
+  static_html: # custom key name
+    # image: python:latest
+    build:
+      context: ./static_html # directory to build the image in
+      dockerfile: static.Dockerfile
+    ports:
+      - 8000:8000
+      - 3000:8000
+    command: python -m http.server 8000
+    volumes:
+      - ./static_html/src:/app
