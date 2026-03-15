@@ -2,7 +2,7 @@ services: # dockers compose expects
   backend: # custom key name
     # image: python:latest
     build:
-      context: ./backend # directory to build the image in
+      context: ./backend # directory to build the image from
       dockerfile: Dockerfile
     ports:
       - 8080:8000
