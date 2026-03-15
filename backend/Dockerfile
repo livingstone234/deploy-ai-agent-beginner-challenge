@@ -13,4 +13,4 @@ RUN pip3 install -r /tmp/requirements.txt
 
 COPY ./src .
 
-# CMD [ "python", "-m", "http.server", "8000" ]
+CMD [ "python", "-m", "http.server", "8000" ]
