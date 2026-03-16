@@ -9,7 +9,7 @@ services: # dockers compose expects
     command: uvicorn main:app --host 0.0.0.0 --port 8000
     environment: # env variables that are not sensitive
       - PORT=8000
-      - MY_PROJECT=Hello world
+      - MY_PROJECT="Hello world"
     env_file: # secret env variables 
       - .env.sample
     volumes:
