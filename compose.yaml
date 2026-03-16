@@ -11,7 +11,7 @@ services: # dockers compose expects
       - PORT=8000
       - MY_PROJECT=Hello world
     env_file: # secret env variables 
-      - .env.sample
+      - .env
     volumes:
       - ./backend/src:/app
     develop:
