@@ -36,6 +36,7 @@ wheels/
 .env
 .env.local
 .env.sample
+.env.sample-db
 
 # Dependencies
 node_modules/
