@@ -13,6 +13,7 @@ async def chat_health():
 
 # /api/chats/recent/
 # curl http://localhost:8080/api/chats/recent/
+# curl https://deploy-ai-agent-beginner-challenge-production.up.railway.app/api/chats/recent/
 @router.get("/recent/", response_model=List[ChatMessageListItem])
 async def chat_list_messages(session: Session = Depends(get_session)):
     query = select(ChatMessage) # sql -> query
@@ -22,6 +23,7 @@ async def chat_list_messages(session: Session = Depends(get_session)):
 
 # HTTP post -> payload = {"message":"hello world"} -> response = {"message":"hello world", "id":1}
 # curl -X POST -d '{"message":"how are you bro"}' -H "Content-Type: application/json" http://localhost:8080/api/chats/
+# curl -X POST -d '{"message":"how are you bro"}' -H "Content-Type: application/json" https://deploy-ai-agent-beginner-challenge-production.up.railway.app/api/chats/
 @router.post("/", response_model=ChatMessage)
 async def chat_create_message(payload: ChatMessagePayload, session: Session = Depends(get_session)):
     data = payload.model_dump() # pydantic -> dict
