@@ -14,9 +14,12 @@ services: # dockers compose expects
       - .env
     volumes:
       - ./backend/src:/app
+    depends_on:                       
+      db_service:
+        condition: service_healthy
     develop:
       watch:
-        - action: rebuild # rebuild if requirements.txt changes
+        - action: rebuild # rebuild if requirements.txt changesn AI Agent with Doc
           path: backend/requirements.txt
         - action: rebuild # rebuild if Dockerfile changes
           path: backend/Dockerfile
@@ -25,14 +28,38 @@ services: # dockers compose expects
         # - action: sync # only updates folders and files that are found in both the local folder and the container folder 
         #   path: backend/src/
         #   target: /app
-  static_html: # custom key name
-    # image: python:latest
-    build:
-      context: ./static_html # directory to build the image in
-      dockerfile: static.Dockerfile
+
+ # DATABASE_URL=postgresql+psycopg://username:password@dbhost:dbport/dbname
+ # DATABASE_URL=postgresql+psycopg://dbuser:db-password@db_service:5432/mydb
+  db_service: # host name
+    image: postgres:18
     ports:
-      - 8000:8000
-      - 3000:8000
-    command: python -m http.server 8000
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=dbuser
+      - POSTGRES_PASSWORD=db-password
+      - POSTGRES_DB=mydb
+    # env_file:
+    #   - .env.sample-db
     volumes:
-      - ./static_html/src:/app
+      - dc_managed_db_volume:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dbuser -d mydb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # static_html: # custom key name
+  #   # image: python:latest
+  #   build:
+  #     context: ./static_html # directory to build the image in
+  #     dockerfile: static.Dockerfile
+  #   ports:
+  #     - 8000:8000
+  #     - 3000:8000
+  #   command: python -m http.server 8000
+  #   volumes:
+  #     - ./static_html/src:/app
+
+volumes:
+  dc_managed_db_volume:
