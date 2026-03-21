@@ -27,6 +27,7 @@ async def chat_list_messages(session: Session = Depends(get_session)):
 # curl -X POST -d '{"message":"how are you bro"}' -H "Content-Type: application/json" http://localhost:8080/api/chats/
 # curl -X POST -d '{"message":"how are you bro"}' -H "Content-Type: application/json" https://deploy-ai-agent-beginner-challenge-production.up.railway.app/api/chats/
 # curl -X POST -d '{"message":"Give me a brief account on the fall of Rome"}' -H "Content-Type: application/json" http://localhost:8080/api/chats/
+# curl -X POST -d '{"message":"Give me a brief account on the fall of Rome"}' -H "Content-Type: application/json" https://deploy-ai-agent-beginner-challenge-production.up.railway.app/api/chats/
 @router.post("/", response_model=EmailMessageSchema)
 async def chat_create_message(payload: ChatMessagePayload, session: Session = Depends(get_session)):
     data = payload.model_dump() # pydantic -> dict
