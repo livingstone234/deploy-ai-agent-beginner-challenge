@@ -1,5 +1,7 @@
 FROM python:latest 
 
+
+# curl -X POST -d '{"message":"how are you bro"}' -H "Content-Type: application/json" http://host.docker.internal/api/chats/
 RUN apt-get update && apt-get install -y curl
 
 # Create a virtual env

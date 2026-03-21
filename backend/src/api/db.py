@@ -8,7 +8,7 @@ load_dotenv(find_dotenv(), override=True)
 
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
-if DATABASE_URL == "":
+if not DATABASE_URL:
     raise NotImplementedError("`DATABASE_URL` is not set.")
 
 DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+psycopg://")
