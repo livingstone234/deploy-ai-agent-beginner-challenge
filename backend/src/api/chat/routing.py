@@ -30,6 +30,7 @@ async def chat_list_messages(session: Session = Depends(get_session)):
 # curl -X POST -d '{"message":"Give me a brief account on the fall of Rome"}' -H "Content-Type: application/json" http://localhost:8080/api/chats/
 # curl -X POST -d '{"message":"Give me a brief account on the fall of Rome"}' -H "Content-Type: application/json" https://deploy-ai-agent-beginner-challenge-production.up.railway.app/api/chats/
 # curl -X POST -d '{"message":"Give a brief account on the fall of Rome and mail it to seblelivingstone@gmail.com"}' -H "Content-Type: application/json" http://localhost:8080/api/chats/
+# curl -X POST -d '{"message":"Give a brief account on the fall of Rome and mail it to seblelivingstone@gmail.com"}' -H "Content-Type: application/json" https://deploy-ai-agent-beginner-challenge-production.up.railway.app/api/chats/
 
 @router.post("/", response_model=SupervisorResponse)
 async def chat_create_message(payload: ChatMessagePayload, session: Session = Depends(get_session)):
