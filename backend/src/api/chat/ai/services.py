@@ -1,8 +1,8 @@
 from .llms import get_openai_llm
 from .schemas import EmailMessageSchema
 
-def genearte_email_message(query: str) -> EmailMessageSchema:
-    llm_base = get_openai_llm()
+def generate_email_message(query: str) -> EmailMessageSchema:
+    llm_base = get_openai_llm(model="openai/gpt-oss-20b")
     llm = llm_base.with_structured_output(EmailMessageSchema, method="json_mode")
 
     messages = [

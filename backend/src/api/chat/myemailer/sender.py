@@ -23,5 +23,5 @@ def send_mail(
     msg.set_content(content)
     with smtplib.SMTP_SSL(EMAIL_HOST, EMAIL_PORT) as smtp:
         smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-    return smtp.send_message(msg)
+        return smtp.send_message(msg)
 

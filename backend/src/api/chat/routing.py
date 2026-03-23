@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends
 from sqlmodel import Session, select
 
 from .models import ChatMessagePayload, ChatMessage, ChatMessageListItem
-from api.chat.ai.services import genearte_email_message
+from api.chat.ai.services import generate_email_message
 from api.chat.ai.schemas import EmailMessageSchema
 from ..db import get_session
 
@@ -36,5 +36,5 @@ async def chat_create_message(payload: ChatMessagePayload, session: Session = De
     session.add(db_obj)
     session.commit()
     # session.refresh(db_obj) # ensures the id/primary_key is added to the obj instance
-    response = genearte_email_message(payload.message)
+    response = generate_email_message(payload.message)
     return response

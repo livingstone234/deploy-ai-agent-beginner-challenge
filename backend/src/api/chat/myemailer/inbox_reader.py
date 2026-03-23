@@ -1,5 +1,5 @@
 import os
-from gmail_imap_parser import GmailImapParser
+from .gmail_imap_parser import GmailImapParser
 from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv(), override=True)

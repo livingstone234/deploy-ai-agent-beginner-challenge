@@ -9,9 +9,9 @@ OPENAI_GROQ_MODEL_NAME = os.environ.get("OPENAI_GROQ_MODEL_NAME") or "openai/gpt
 if not GROQ_API_KEY:
     raise NotImplementedError("`GROQ_API_KEY` not set.")
 
-def get_openai_llm() -> ChatGroq:
+def get_openai_llm(model=OPENAI_GROQ_MODEL_NAME) -> ChatGroq:
     openai_params = {
-        "model":OPENAI_GROQ_MODEL_NAME,
+        "model":model,
         "api_key":GROQ_API_KEY
     }
     if GROQ_BASE_URL:
