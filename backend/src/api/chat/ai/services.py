@@ -6,7 +6,7 @@ def generate_email_message(query: str) -> EmailMessageSchema:
     llm = llm_base.with_structured_output(EmailMessageSchema, method="json_mode")
 
     messages = [
-        ("system", """You are a helpful assistant for research and composing plaintext emails. 
+        ("system", """You are a helpful assistant for research, writing up and composing plaintext emails. 
         Respond ONLY with a valid JSON object with these exact keys:
         - subject: string
         - contents: string  

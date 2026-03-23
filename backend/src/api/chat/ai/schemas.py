@@ -6,3 +6,6 @@ class EmailMessageSchema(BaseModel):
     subject: str
     contents: str
     invalid_request: bool = Field(default=False)
+
+class SupervisorResponse(BaseModel):
+    content: str

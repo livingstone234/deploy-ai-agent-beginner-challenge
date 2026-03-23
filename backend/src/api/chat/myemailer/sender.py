@@ -11,9 +11,9 @@ EMAIL_HOST = os.environ.get("EMAIL_HOST") or "smtp.gmail.com"
 EMAIL_PORT = os.environ.get("EMAIL_PORT") or "465"
 
 def send_mail(
+        to_email: str,
         subject: str = "No subject provided",
         content: str = "No content provided",
-        to_email: str = EMAIL_ADDRESS,
         from_email: str = EMAIL_ADDRESS
 ):
     msg = EmailMessage()

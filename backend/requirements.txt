@@ -6,3 +6,4 @@ psycopg[binary]
 langchain
 langchain-groq
 langgraph
+langgraph_supervisor

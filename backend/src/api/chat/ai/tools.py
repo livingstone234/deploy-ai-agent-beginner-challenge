@@ -5,17 +5,18 @@ from ..myemailer.inbox_reader import read_inbox
 from .services import generate_email_message
 
 @tool
-def send_me_email(subject: str, content: str) -> str:
+def send_me_email(subject: str, content: str, to_email: str = "myapp2821@gmail.com") -> str:
     """
     Send an email to myself with a subject and content.
 
     Arguments:
     - subject: str - Text subject of the email
     - content: str - Text body content of the email
+    - to_email: str - Recipient's email address 
     """
 
     try: 
-        send_mail(subject=subject, content=content)
+        send_mail(subject=subject, content=content, to_email=to_email)
     except:
         return "Not sent"
     return "Sent email"
