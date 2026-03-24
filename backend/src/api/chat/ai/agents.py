@@ -3,14 +3,14 @@ from langgraph.graph import StateGraph, START
 from langgraph_supervisor import create_supervisor
 
 from .llms import get_openai_llm
-from .tools import (send_me_email, get_unread_emails, research_email)
+from .tools import (send_email, get_unread_emails, research_email)
 
 # from dotenv import load_dotenv, find_dotenv
 # load_dotenv(find_dotenv(), override=True)
 
 
 EMAIL_TOOLS_LIST = [
-    send_me_email,
+    send_email,
     get_unread_emails
 ]
 
@@ -31,7 +31,7 @@ def get_email_agent() -> create_agent:
     return agent
 
 def get_research_agent() -> create_agent:
-    model = get_openai_llm()
+    model = get_openai_llm(model="openai/gpt-oss-20b")
     agent = create_agent(
         model=model,
         tools=[research_email],
@@ -59,9 +59,13 @@ def get_supervisor_agent():
             2. research_agent — researches and prepares email content.
 
             Routing rules:
-            - If the user wants to SEND an email, first delegate to research_agent to prepare the content, then delegate to email_agent to send it.
-            - If the user wants to READ or REVIEW emails, delegate to email_agent only.
-            - If the user wants to RESEARCH a topic for an email, delegate to research_agent only.
-            - Never answer directly — always delegate to the appropriate agent."""
+            - For SEND requests, you MUST follow this exact order:
+                STEP 1: ALWAYS delegate to research_agent FIRST to prepare the content.
+                STEP 2: ONLY AFTER research_agent responds, delegate to email_agent to send it.
+            - For READ/REVIEW requests, delegate to email_agent only.
+            - For RESEARCH only requests, delegate to research_agent only.
+            - Never answer directly — always delegate to the appropriate agent.
+            - Once all tasks are completed, STOP.
+            - Once email_agent returns 'Sent email successfully', STOP immediately. Do not call any agent again."""
     )
     return supervisor.compile()

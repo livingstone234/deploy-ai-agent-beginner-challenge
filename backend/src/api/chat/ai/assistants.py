@@ -1,10 +1,10 @@
 from .llms import get_openai_llm
-from .tools import (send_me_email, get_unread_emails)
+from .tools import (send_email, get_unread_emails)
 
 
 
 EMAIL_TOOLS = {
-    "send_me_email":send_me_email,
+    "send_me_email":send_email,
     "get_unread_emails":get_unread_emails
 }
 

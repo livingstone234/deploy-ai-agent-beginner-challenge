@@ -4,8 +4,9 @@ from ..myemailer.sender import send_mail
 from ..myemailer.inbox_reader import read_inbox
 from .services import generate_email_message
 
+
 @tool
-def send_me_email(subject: str, content: str, to_email: str = "myapp2821@gmail.com") -> str:
+def send_email(subject: str, content: str, to_email: str = "myapp2821@gmail.com") -> str:
     """
     Send an email to an email address with the recipient address as your target with a subject and content.
 
@@ -14,12 +15,15 @@ def send_me_email(subject: str, content: str, to_email: str = "myapp2821@gmail.c
     - content: str - Text body content of the email
     - to_email: str - Recipient's email address 
     """
-
+    _email_sent = False
+    if _email_sent:
+        return "Email already sent, do not call this tool again."
     try: 
         send_mail(subject=subject, content=content, to_email=to_email)
-    except:
-        return "Not sent"
-    return "Sent email"
+        _email_sent = True
+        return "Sent email"
+    except Exception as e:
+        return f"Not sent: {str(e)}"
 
 @tool
 def get_unread_emails(hours_ago=24) -> str:

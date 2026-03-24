@@ -51,7 +51,10 @@ async def chat_create_message(payload: ChatMessagePayload, session: Session = De
             "content":f"{payload.message}"
         }]
     }
-    result = await asyncio.to_thread(supervisor.invoke, msg_data) 
+    result = await asyncio.to_thread(
+        supervisor.invoke,
+        msg_data
+    )
     if not result:
         raise HTTPException(status_code=400, detail="Error with supervisor")
     messages = result.get("messages")
