@@ -8,7 +8,7 @@ load_dotenv(find_dotenv(), override=True)
 EMAIL_ADDRESS = os.environ.get("EMAIL_ADDRESS")
 EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD")
 EMAIL_HOST = os.environ.get("EMAIL_HOST") or "smtp.gmail.com"
-EMAIL_PORT = int(os.environ.get("EMAIL_PORT")) or 465
+EMAIL_PORT = int(os.environ.get("EMAIL_PORT")) or 587
 
 def send_mail(
         to_email: str,
@@ -21,7 +21,8 @@ def send_mail(
     msg["From"] = from_email
     msg["To"] = to_email
     msg.set_content(content)
-    with smtplib.SMTP_SSL(EMAIL_HOST, EMAIL_PORT) as smtp:
+    with smtplib.SMTP(EMAIL_HOST, EMAIL_PORT) as smtp:
+        smtp.starttls()
         smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
         return smtp.send_message(msg)
 
