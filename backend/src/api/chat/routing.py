@@ -43,7 +43,7 @@ async def chat_create_message(payload: ChatMessagePayload, session: Session = De
     # store data in db
     session.add(db_obj)
     session.commit()
-    # session.refresh(db_obj) # ensures the id/primary_key is added to the obj instance
+    session.refresh(db_obj) # ensures the id/primary_key is added to the obj instance
     # response = generate_email_message(payload.message)
     msg_data = {
         "messages":[{
