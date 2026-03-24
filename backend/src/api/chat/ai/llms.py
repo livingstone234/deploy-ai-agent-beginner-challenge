@@ -5,7 +5,7 @@ from langchain_groq import ChatGroq
 GROQ_BASE_URL = os.environ.get("GROQ_BASE_URL") or "https://api.groq.com"
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 OPENAI_GROQ_MODEL_NAME = os.environ.get("OPENAI_GROQ_MODEL_NAME") or "openai/gpt-oss-120b"
-
+# OPENAI_GROQ_MODEL_NAME = os.environ.get("OPENAI_GROQ_MODEL_NAME") or "llama-3.3-70b-versatile"
 if not GROQ_API_KEY:
     raise NotImplementedError("`GROQ_API_KEY` not set.")
 

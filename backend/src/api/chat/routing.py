@@ -1,6 +1,7 @@
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
+import asyncio
 
 from .models import ChatMessagePayload, ChatMessage, ChatMessageListItem
 # from api.chat.ai.services import generate_email_message
@@ -32,6 +33,9 @@ async def chat_list_messages(session: Session = Depends(get_session)):
 # curl -X POST -d '{"message":"Give a brief account on the fall of Rome and mail it to seblelivingstone@gmail.com"}' -H "Content-Type: application/json" http://localhost:8080/api/chats/
 # curl -X POST -d '{"message":"Give a brief account on the fall of Rome and mail it to seblelivingstone@gmail.com"}' -H "Content-Type: application/json" https://deploy-ai-agent-beginner-challenge-production.up.railway.app/api/chats/
 
+
+supervisor = get_supervisor_agent()
+
 @router.post("/", response_model=SupervisorResponse)
 async def chat_create_message(payload: ChatMessagePayload, session: Session = Depends(get_session)):
     data = payload.model_dump() # pydantic -> dict
@@ -41,14 +45,13 @@ async def chat_create_message(payload: ChatMessagePayload, session: Session = De
     session.commit()
     # session.refresh(db_obj) # ensures the id/primary_key is added to the obj instance
     # response = generate_email_message(payload.message)
-    sup = get_supervisor_agent()
     msg_data = {
         "messages":[{
             "role":"user",
             "content":f"{payload.message}"
         }]
     }
-    result = sup.invoke(msg_data)
+    result = await asyncio.to_thread(supervisor.invoke, msg_data) 
     if not result:
         raise HTTPException(status_code=400, detail="Error with supervisor")
     messages = result.get("messages")
