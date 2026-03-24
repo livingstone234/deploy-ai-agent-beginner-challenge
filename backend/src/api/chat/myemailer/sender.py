@@ -8,7 +8,7 @@ load_dotenv(find_dotenv(), override=True)
 EMAIL_ADDRESS = os.environ.get("EMAIL_ADDRESS")
 EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD")
 EMAIL_HOST = os.environ.get("EMAIL_HOST") or "smtp.gmail.com"
-EMAIL_PORT = int(os.environ.get("EMAIL_PORT")) or 587
+EMAIL_PORT = int(os.environ.get("EMAIL_PORT") or 587)
 
 def send_mail(
         to_email: str,
