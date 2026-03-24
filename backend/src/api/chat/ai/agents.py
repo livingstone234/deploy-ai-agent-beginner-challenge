@@ -15,7 +15,7 @@ EMAIL_TOOLS_LIST = [
 ]
 
 def get_email_agent() -> create_agent:
-    model = get_openai_llm()
+    model = get_openai_llm(model="qwen/qwen3-32b")
     agent = create_agent(
         model=model,
         tools=EMAIL_TOOLS_LIST,
