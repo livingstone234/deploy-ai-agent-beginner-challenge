@@ -7,7 +7,7 @@ from .services import generate_email_message
 @tool
 def send_me_email(subject: str, content: str, to_email: str = "myapp2821@gmail.com") -> str:
     """
-    Send an email to myself with a subject and content.
+    Send an email to an email address with the recipient address as your target with a subject and content.
 
     Arguments:
     - subject: str - Text subject of the email
