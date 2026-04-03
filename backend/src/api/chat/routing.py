@@ -22,7 +22,7 @@ async def chat_health():
 async def chat_list_messages(session: Session = Depends(get_session)):
     query = select(ChatMessage) # sql -> query
     # results = session.exec(query).fetchall()[:10]
-    results = session.exec(query).fetchall()[:10]
+    results = session.exec(query).fetchall()
     return results
 
 
